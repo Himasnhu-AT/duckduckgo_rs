@@ -1,5 +1,6 @@
 [package]
 name = "duckduckgo_rs"
+description = "interface to interact with the DuckDuckGo search engine. This library allows you to perform web searches and retrieve search results programmatically."
 version = "0.0.1"
 edition = "2021"
 authors = ["Himanshu <hyattherate2005@gmail.com>"]
