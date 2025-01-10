@@ -4,13 +4,13 @@ use scraper::{Html, Selector};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
-struct SearchResult {
-    title: String,
-    description: String,
-    url: String,
+pub struct SearchResult {
+    pub title: String,
+    pub description: String,
+    pub url: String,
 }
 
-async fn search_duckduckgo(client: &Client, query: &str) -> Result<Vec<SearchResult>> {
+pub async fn search_duckduckgo(client: &Client, query: &str) -> Result<Vec<SearchResult>> {
     let encoded_query = urlencoding::encode(query);
     let url = format!("https://html.duckduckgo.com/html/?q={}", encoded_query);
 
@@ -77,24 +77,29 @@ async fn search_duckduckgo(client: &Client, query: &str) -> Result<Vec<SearchRes
     Ok(results)
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
-    let http_client = Client::new();
-    let query = "rust programming"; // Example query
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use reqwest::Client;
+    use tokio;
 
-    match search_duckduckgo(&http_client, query).await {
-        Ok(results) => {
-            for result in results {
-                println!("Title: {}", result.title);
-                println!("Description: {}", result.description);
-                println!("URL: {}", result.url);
-                println!();
+    #[tokio::test]
+    async fn test_search_duckduckgo() {
+        let http_client = Client::new();
+        let query = "rust programming";
+
+        match search_duckduckgo(&http_client, query).await {
+            Ok(results) => {
+                assert!(!results.is_empty(), "Results should not be empty");
+                for result in results {
+                    assert!(!result.title.is_empty(), "Title should not be empty");
+                    assert!(!result.description.is_empty(), "Description should not be empty");
+                    assert!(!result.url.is_empty(), "URL should not be empty");
+                }
+            }
+            Err(e) => {
+                panic!("Error occurred: {}", e);
             }
         }
-        Err(e) => {
-            eprintln!("Error occurred: {}", e);
-        }
     }
-
-    Ok(())
 }

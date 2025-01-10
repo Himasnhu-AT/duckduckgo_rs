@@ -251,6 +251,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "duckduckgo_rs"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "axum",
+ "reqwest",
+ "scraper",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tower-http",
+ "urlencoding",
+]
+
+[[package]]
 name = "ego-tree"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -858,21 +873,6 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "tempfile",
-]
-
-[[package]]
-name = "neura"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "reqwest",
- "scraper",
- "serde",
- "serde_json",
- "tokio",
- "tower-http",
- "urlencoding",
 ]
 
 [[package]]
